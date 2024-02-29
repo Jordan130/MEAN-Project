@@ -1,0 +1,21 @@
+extends layout
+block content
+  body
+    .container
+      nav.navbar.fixed-top.navbar-expand-sm.navbar-dark.bg-primary
+        a.navbar-brand(href='/') My Blog
+        .collapse.navbar-collapse#navbarNavAltMarkup
+          .navbar-nav
+            a.nav-item.nav-link.active(href='/blogList') List Blogs
+            a.nav-item.nav-link.active(href='/blogAdd') Add Blog
+      p
+      .card.border-primary(style='width: 50%')
+        form(method='put', action='/blogs/${blog._id}', style='padding: 20px')
+          .form-group
+            label.text-primary(for='summary') Blog Title
+            input.form-control(id='blogTitle', name='blogTitle', value = blog.title)
+            label.text-primary(for='detail') Blog Text
+            textarea.form-control(id='blogText', name='blogText')= blog.text
+          input(type='submit', class='btn btn-primary', value='Save Blog')
+  script(src='/js/jquery.min.js')
+  script(src='/js/bootstrap.min.js')

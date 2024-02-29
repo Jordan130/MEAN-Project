@@ -1,0 +1,30 @@
+extends layout
+block content
+    div.container
+      nav.navbar.fixed-top.navbar-expand-sm.navbar-dark.bg-primary
+        a.navbar-brand(href="/") My Blog
+        div.collapse.navbar-collapse(id="navbarNavAltMarkup")
+          div.navbar-nav
+            a.nav-item.nav-link.active(href="/blogList") List Blogs
+            a.nav-item.nav-link.active(href="/blogAdd") Add Blog
+
+      div.container
+        each entry in blogEntries
+          div.card.border-primary(style='width: 50%; margin-bottom: 20px;')
+            div.card-header
+            div.card-body
+              h5.card-title= entry.title
+              p.card-text= `Created on: ${entry.createdOn}`
+            div.card-footer
+              div.col-sm
+                ul.nav.justify-content-end.nav-pills.card-header-pills
+                  li.nav-item
+                    a.nav-link(href=`/blogEdit/${entry._id}`)
+                      i.fas.fa-edit
+                  li.nav-item
+                    a.nav-link(href=`/blogDelete/${entry._id}`)
+                      i.fas.fa-trash-alt
+
+    script(src="/js/jquery.min.js")
+    script(src="/js/bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js")
