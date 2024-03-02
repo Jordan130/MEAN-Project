@@ -9,14 +9,14 @@ router.get('/', homeController.homePage);
 /* GET blogList page. */
 router.get('/blogList', blogController.blogList);
 
+/* GET blogAdd page. */
+router.get('/blogAdd', blogController.blogAdd);
+
 /* GET blogDelete page */
 router.get('/blogDelete/:id', blogController.renderBlogDeletePage);
 
 /* POST blogDelete page */
 router.post('/blogDelete/:id', blogController.deleteBlog);
-
-/* GET blogAdd page. */
-router.get('/blogAdd', blogController.blogAdd);
 
 /* GET blogEdit page. */
 router.get('/blogEdit/:id', blogController.renderBlogEditPage);
