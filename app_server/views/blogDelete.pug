@@ -10,7 +10,7 @@ block content
             a.nav-item.nav-link.active(href='/blogList') List Blogs
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
       .card.border-primary(style='width: 50%')
-        form(method='post', action=`/blogs/${blog._id}`, style='padding: 20px')
+        form(method='post', action=`/blogDelete/${blog._id}`, style='padding: 20px')
           .form-group
             label.text-primary(for='summary') Blog Title
             input.readonly.form-control(id='blogTitle', name='blogTitle', value=blog && blog.title, readonly)

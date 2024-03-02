@@ -1,4 +1,5 @@
 extends layout
+
 block content
   body
     .container
@@ -10,7 +11,7 @@ block content
             a.nav-item.nav-link.active(href='/blogAdd') Add Blog
       p
       .card.border-primary(style='width: 50%')
-        form(method='put', action='/blogs/${blog._id}', style='padding: 20px')
+        form(method='post', action=`/blogEdit/${blog._id}`, style='padding: 20px')
           .form-group
             label.text-primary(for='summary') Blog Title
             input.form-control(id='blogTitle', name='blogTitle', value = blog.title)
