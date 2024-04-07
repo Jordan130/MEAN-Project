@@ -28,12 +28,24 @@ bloggerApp.config(function($routeProvider) {
             controller: 'BlogDeleteController',
             controllerAs: 'vm'
         })
+        .when('/login', {
+            templateUrl: 'LoginID',
+            controller: 'LoginController',
+            controllerAs: 'vm'
+        })
+        .when('/register', {
+            templateUrl: 'RegisterID',
+            controller: 'RegisterController',
+            controllerAs: 'vm'
+        })
         .otherwise({
             redirectTo: '/'
         });
 });
 
 // Define controllers
+
+// Home Controller
 bloggerApp.controller('HomeController', function() {
     var vm = this;
     vm.pageHeader = {
@@ -42,10 +54,16 @@ bloggerApp.controller('HomeController', function() {
     vm.message = "Welcome to my Blog Site!";
 });
 
-bloggerApp.controller('BlogListController', function($http) {
+// Blog List Controller
+bloggerApp.controller('BlogListController', function($http, authentication) {
     var vm = this;
     vm.pageHeader = {
         title: 'Blog List'
+    };
+
+    // Function to check if the current user is the creator of a blog post
+    vm.isCreator = function(blog) {
+        return authentication.isLoggedIn() && authentication.currentUser()._id === blog.creator;
     };
 
     $http.get('/api/blogs')
@@ -57,6 +75,8 @@ bloggerApp.controller('BlogListController', function($http) {
         });
 });
 
+
+// Blog Add Controller
 bloggerApp.controller('BlogAddController', function($http, $location) {
     var vm = this;
 
@@ -76,6 +96,7 @@ bloggerApp.controller('BlogAddController', function($http, $location) {
     };
 });
 
+// Blog Edit Controller
 bloggerApp.controller('BlogEditController', function($http, $routeParams, $location) {
     var vm = this;
     vm.id = $routeParams.id;
@@ -106,6 +127,7 @@ bloggerApp.controller('BlogEditController', function($http, $routeParams, $locat
     };
 });
 
+// Blog Delete Controller
 bloggerApp.controller('BlogDeleteController', function($http, $routeParams, $location) {
     var vm = this;
     vm.id = $routeParams.id;
@@ -131,4 +153,3 @@ bloggerApp.controller('BlogDeleteController', function($http, $routeParams, $loc
             });
     };
 });
-
