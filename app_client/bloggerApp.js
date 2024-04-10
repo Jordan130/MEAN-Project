@@ -63,7 +63,8 @@ bloggerApp.controller('BlogListController', function($http, authentication) {
 
     // Function to check if the current user is the creator of a blog post
     vm.isCreator = function(blog) {
-        return authentication.isLoggedIn() && authentication.currentUser()._id === blog.creator;
+        var currentUser = authentication.currentUser();
+        return currentUser && blog.authorEmail === currentUser.email;
     };
 
     $http.get('/api/blogs')
@@ -75,15 +76,16 @@ bloggerApp.controller('BlogListController', function($http, authentication) {
         });
 });
 
-
 // Blog Add Controller
-bloggerApp.controller('BlogAddController', function($http, $location) {
+bloggerApp.controller('BlogAddController', function($http, $location, authentication) {
     var vm = this;
 
     vm.addBlog = function() {
         var newBlog = {
             title: vm.newBlogTitle,
-            text: vm.newBlogText
+            text: vm.newBlogText,
+            authorName: authentication.currentUser().name,
+            authorEmail: authentication.currentUser().email
         };
         $http.post('/api/blogs', newBlog)
             .then(function(response) {
