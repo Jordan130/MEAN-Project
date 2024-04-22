@@ -77,3 +77,19 @@ exports.deleteBlog = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Inside your controllers/blog.js file
+module.exports.likeBlog = async function(req, res) {
+  try {
+      const blogId = req.params.id;
+      // Find the blog post by ID and update its likes count
+      const blog = await Blog.findByIdAndUpdate(blogId, { $inc: { likes: 1 } }, { new: true });
+      if (!blog) {
+          return res.status(404).json({ message: 'Blog not found' });
+      }
+      // Return the updated likes count
+      res.status(200).json({ likes: blog.likes });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+};

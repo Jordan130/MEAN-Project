@@ -67,6 +67,23 @@ bloggerApp.controller('BlogListController', function($http, authentication) {
         return currentUser && blog.authorEmail === currentUser.email;
     };
 
+     // Function to check if the user is authenticated
+     vm.isAuthenticated = authentication.isLoggedIn();
+     
+    // Function to like a blog post
+    vm.likeBlog = function(blog) {
+        // Send like request to server
+        $http.post('/api/blogs/' + blog._id + '/like')
+            .then(function(response) {
+                // Update like count in UI
+                blog.likes = response.data.likes;
+            })
+            .catch(function(error) {
+                console.error('Error liking blog post:', error);
+            });
+    };
+
+    // Fetch blogs with like counts
     $http.get('/api/blogs')
         .then(function(response) {
             vm.blogs = response.data;

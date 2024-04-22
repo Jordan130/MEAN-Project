@@ -3,8 +3,9 @@ var app = angular.module('bloggerApp');
 //*** Authentication Service and Methods **
 app.service('authentication', ['$window', '$http', function($window, $http) {
   var saveToken = function(token) {
-      $window.localStorage['blog-token'] = token;
-  };
+    $window.localStorage['blog-token'] = token;
+    console.log('Token saved:', token); // Log the saved token
+};
 
   var getToken = function() {
       return $window.localStorage['blog-token'];
@@ -30,8 +31,14 @@ app.service('authentication', ['$window', '$http', function($window, $http) {
     var token = getToken();
     if (token) {
         var payload = JSON.parse($window.atob(token.split('.')[1]));
-        return payload.exp > Date.now() / 1000;
+        console.log('Token payload:', payload); // Log the decoded token payload
+        console.log('Current timestamp:', Date.now() / 1000); // Log the current timestamp
+        console.log('Token expiration timestamp:', payload.exp); // Log the token expiration timestamp
+        var isTokenValid = payload.exp > Date.now() / 1000;
+        console.log('Is token valid:', isTokenValid); // Log whether the token is valid
+        return isTokenValid;
     }
+    console.log('No token found.');
     return false;
 };
 

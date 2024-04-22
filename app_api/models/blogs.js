@@ -22,7 +22,11 @@ const blogSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-  });  
+    likes: {
+      type: Number,
+      default: 0
+  }
+});  
 
 // Create the Mongoose model for the blog entry
 const Blog = mongoose.model('Blog', blogSchema);
