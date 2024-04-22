@@ -55,7 +55,7 @@ bloggerApp.controller('HomeController', function() {
 });
 
 // Blog List Controller
-bloggerApp.controller('BlogListController', function($http, authentication) {
+bloggerApp.controller('BlogListController', function($http, $scope, $interval, authentication) {
     var vm = this;
     vm.pageHeader = {
         title: 'Blog List'
@@ -100,14 +100,31 @@ bloggerApp.controller('BlogListController', function($http, authentication) {
             });
     };
 
-    // Fetch blogs with like counts
-    $http.get('/api/blogs')
-        .then(function(response) {
-            vm.blogs = response.data;
-        })
-        .catch(function(error) {
-            vm.message = "Could not get list of blogs";
-        });
+    // Function to fetch blogs
+    function fetchBlogs() {
+        $http.get('/api/blogs')
+            .then(function(response) {
+                vm.blogs = response.data;
+                vm.message = "Blogs list found!";
+            })
+            .catch(function(error) {
+                vm.message = "Could not get list of blogs";
+            });
+    }
+
+    // Fetch blogs initially
+    fetchBlogs();
+
+    // Refresh blogs periodically
+    var refreshInterval = $interval(fetchBlogs, 1000); // Every 1 second
+
+    // Function to cancel the interval when controller is destroyed
+    $scope.$on('$destroy', function() {
+        if (angular.isDefined(refreshInterval)) {
+            $interval.cancel(refreshInterval);
+            refreshInterval = undefined;
+        }
+    });
 });
 
 // Blog Add Controller
