@@ -61,22 +61,39 @@ bloggerApp.controller('BlogListController', function($http, authentication) {
         title: 'Blog List'
     };
 
+    // Load liked posts IDs from authentication service
+    vm.likedPosts = authentication.getLikedPosts();
+
     // Function to check if the current user is the creator of a blog post
     vm.isCreator = function(blog) {
         var currentUser = authentication.currentUser();
         return currentUser && blog.authorEmail === currentUser.email;
     };
 
-     // Function to check if the user is authenticated
-     vm.isAuthenticated = authentication.isLoggedIn();
-     
+    // Function to check if the user is authenticated
+    vm.isAuthenticated = authentication.isLoggedIn();
+
+    // Function to check if the current user has liked a blog post
+    vm.hasLiked = function(blog) {
+        return vm.likedPosts.includes(blog._id);
+    };
+
     // Function to like a blog post
     vm.likeBlog = function(blog) {
+        if (vm.hasLiked(blog)) {
+            console.log('You have already liked this post!');
+            return;
+        }
+
         // Send like request to server
         $http.post('/api/blogs/' + blog._id + '/like')
             .then(function(response) {
                 // Update like count in UI
                 blog.likes = response.data.likes;
+                // Add the liked post ID to the array
+                vm.likedPosts.push(blog._id);
+                // Update liked posts in authentication service
+                authentication.addLikedPost(blog._id);
             })
             .catch(function(error) {
                 console.error('Error liking blog post:', error);

@@ -7,9 +7,16 @@ const Blog = mongoose.model('Blog');
 // api/blogs
 exports.getAllBlogs = async (req, res) => {
   try {
+    // Fetch all blogs from the database
     const blogs = await Blog.find();
+    
+    // Sort the blogs based on the number of likes in descending order
+    blogs.sort((a, b) => b.likes - a.likes);
+
+    // Send the sorted list of blogs to the client
     res.json(blogs);
   } catch (error) {
+    // Handle errors
     res.status(500).json({ error: error.message });
   }
 };

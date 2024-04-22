@@ -53,15 +53,39 @@ app.service('authentication', ['$window', '$http', function($window, $http) {
       }
   };
 
-  return {
-      saveToken: saveToken,
-      getToken: getToken,
-      register: register,
-      login: login,
-      logout: logout,
-      isLoggedIn: isLoggedIn,
-      currentUser: currentUser
-  };
+  var likedPosts = []; // Array to store liked post IDs
+
+    var getLikedPosts = function() {
+        return likedPosts;
+    };
+
+    var setLikedPosts = function(posts) {
+        likedPosts = posts;
+    };
+
+    var hasLikedPost = function(postId) {
+        return likedPosts.includes(postId);
+    };
+
+    var addLikedPost = function(postId) {
+        if (!hasLikedPost(postId)) {
+            likedPosts.push(postId);
+        }
+    };
+
+    return {
+        saveToken: saveToken,
+        getToken: getToken,
+        register: register,
+        login: login,
+        logout: logout,
+        isLoggedIn: isLoggedIn,
+        currentUser: currentUser,
+        getLikedPosts: getLikedPosts,
+        setLikedPosts: setLikedPosts,
+        hasLikedPost: hasLikedPost,
+        addLikedPost: addLikedPost
+    };
 }]);
 
 app.controller('LoginController', ['$http', '$location', 'authentication', function LoginController($http, $location, authentication) {

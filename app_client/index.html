@@ -46,9 +46,12 @@
                                 <!-- Display likes -->
                                 <p class="card-text">Likes: {{ blog.likes }}</p>
                                 <!-- Inside the card-body -->
-                                <button ng-if="!vm.isCreator(blog) && vm.isAuthenticated" ng-click="vm.likeBlog(blog)" class="btn btn-primary">
+                                <button ng-if="!vm.isCreator(blog) && vm.isAuthenticated && !vm.hasLiked(blog)" ng-click="vm.likeBlog(blog)" class="btn btn-primary">
                                     <i class="fas fa-thumbs-up"></i> Like
                                 </button>
+                                <button ng-if="!vm.isCreator(blog) && vm.isAuthenticated && vm.hasLiked(blog)" class="btn btn-primary" disabled>
+                                    <i class="fas fa-thumbs-up"></i> Liked
+                                </button>                                
                             </div>
                             <div class="card-footer">
                                 <div class="col-sm">
