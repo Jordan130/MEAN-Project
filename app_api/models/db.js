@@ -2,7 +2,7 @@ var  mongoose = require('mongoose');
 var gracefulShutdown;
 
 require('dotenv').config(); // Load environment variables from .env
-//Database connection
+// Database connection
 var dbURI = process.env.DB_URI
 
 if (process.env.NODE_ENV === 'production') {
