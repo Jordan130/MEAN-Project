@@ -1,6 +1,10 @@
 var  mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb://blogger:coolBlogger@localhost/Blogger'; 
+
+require('dotenv').config(); // Load environment variables from .env
+//Database connection
+var dbURI = process.env.DB_URI
+
 if (process.env.NODE_ENV === 'production') {
 	    dbURI = process.env.MONGOLAB_URI;
 }
