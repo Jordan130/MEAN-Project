@@ -5,7 +5,6 @@ Welcome to the Blogger App, a simple and intuitive blogging platform built using
 This application allows users to manage blog posts and interact through likes.
 
 ## Prerequisites
-
 Before using the application, ensure the following are installed and configured on your system:
 
 1. **Install [Node.js and npm (Node Package Manager)](https://nodejs.org/en):**  
@@ -30,10 +29,6 @@ Before using the application, ensure the following are installed and configured 
      })
      ```
      This creates a user named `blogger` with the password `coolBlogger` and assigns the `dbOwner` role.
-
----
-
-
 
 ## Instructions
 ### Step 1: Clone the Repository
